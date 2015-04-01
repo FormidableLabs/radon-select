@@ -4,13 +4,6 @@
     "browser": false,
     "mocha": true
   },
-  "globals": {
-    "navigator",
-    "$serverSide",
-    "$isiOS",
-    "$isAndroid",
-    "$isBrowser"
-  },
   "parser": "babel-eslint",
   "ecmaFeatures": {
     "arrowFunctions": true,
