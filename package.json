@@ -4,8 +4,22 @@
   "description": "React select box replacement component",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "examples": "webpack-dev-server --config examples/webpack.config.js --no-info --content-base examples/"
   },
   "author": "",
-  "license": "ISC"
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=0.12.0 <0.14.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^2.0.2",
+    "gulp": "^3.8.11",
+    "gulp-react": "^3.0.1",
+    "gulp-rimraf": "^0.1.1",
+    "gulp-eslint": "^0.6.0",
+    "jsx-loader": "^0.12.2",
+    "react": ">=0.12.0 <0.14.0",
+    "webpack": "^1.5.3",
+    "webpack-dev-server": "^1.7.0"
+  }
 }

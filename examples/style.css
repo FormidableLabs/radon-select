@@ -1,0 +1,80 @@
+.radon-select {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  height: 30px;
+  vertical-align: middle;
+  color: #666;
+}
+
+.radon-select-list {
+  min-width: 110px;
+  position: absolute;
+  border: 1px solid lightblue;
+  background: #fff;
+  z-index: 200;
+}
+
+.radon-select-current {
+  padding: 5px 10px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+}
+
+.radon-select-current:after {
+  content: "";
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin: -2px 0 0 5px;
+  border: 4px solid transparent;
+  border-top-color: #666;
+  vertical-align: middle;
+}
+
+.radon-select.open .radon-select-current {
+  display: none;
+}
+
+.radon-select.focus .radon-select-current {
+  border-color: #ccc;
+}
+
+.radon-select-option {
+  padding: 5px 40px 5px 10px;
+  border-top: 1px solid #ccc;
+  outline: none;
+}
+
+.radon-select-option:first-child {
+  border-top: none;
+}
+
+.radon-select-option.active {
+  color: blue;
+}
+
+.radon-select-option.hover {
+  color: lightblue;
+}
+
+.radon-select-hidden-select {
+  /* hide the select box visually */
+  position: absolute!important;
+  overflow: hidden!important;
+  display: block!important;
+  width: 1px!important;
+  height: 1px!important;
+  margin: -1px!important;
+  padding: 0!important;
+  border: 0!important;
+  clip: rect(0 0 0 0)!important;
+}
