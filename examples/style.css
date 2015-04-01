@@ -45,7 +45,7 @@
 }
 
 .radon-select.focus .radon-select-current {
-  border-color: #ccc;
+  border-color: blue;
 }
 
 .radon-select-option {
