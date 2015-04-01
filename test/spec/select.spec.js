@@ -28,6 +28,5 @@ describe('Button', function () {
     it('should render into the document', function() {
         expect(component.isMounted()).to.be.true;
     });
-
   });
 });

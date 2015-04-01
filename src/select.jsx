@@ -270,7 +270,7 @@ var classBase = React.createClass({
           {selectedOptionContent || this.props.placeholderText || this.props.children[0].props.children}
         </div>
         {this.state.open ?
-          <div className={this.props.listClassName}>
+          <div className={this.props.listClassName} onBlur={this.toggleOpen}>
             {React.Children.map(this.props.children, this.renderChild)}
           </div>
           : ""
