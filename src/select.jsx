@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react');
 var cloneWithProps = require('react/lib/cloneWithProps');
+var assign = require('object-assign');
 
 var keyboard = {
   space: 32,
@@ -41,6 +42,7 @@ var classBase = React.createClass({
     defaultValue: React.PropTypes.string,
     placeholderText: React.PropTypes.string,
     typeaheadDelay: React.PropTypes.number,
+    showCurrentOptionWhenOpen: React.PropTypes.bool,
     onChange: React.PropTypes.func,
     // Should there just be a baseClassName that these are derived from?
     className: React.PropTypes.string,
@@ -48,18 +50,23 @@ var classBase = React.createClass({
     focusClassName: React.PropTypes.string,
     listClassName: React.PropTypes.string,
     currentOptionClassName: React.PropTypes.string,
-    hiddenSelectClassName: React.PropTypes.string
+    hiddenSelectClassName: React.PropTypes.string,
+    currentOptionStyle: React.PropTypes.object,
+    optionListStyle: React.PropTypes.object
   },
   getDefaultProps () {
     return {
       typeaheadDelay: 1000,
+      showCurrentOptionWhenOpen: false,
       onChange: function () {},
       className: 'radon-select',
       openClassName: 'open',
       focusClassName: 'focus',
       listClassName: 'radon-select-list',
       currentOptionClassName: 'radon-select-current',
-      hiddenSelectClassName: 'radon-select-hidden-select'
+      hiddenSelectClassName: 'radon-select-hidden-select',
+      currentOptionStyle: {},
+      optionListStyle: {}
     };
   },
   getInitialState () {
@@ -109,6 +116,7 @@ var classBase = React.createClass({
       this.onChange();
 
       if (this.state.open) {
+        this.isFocusing = true;
         React.findDOMNode(this.refs['option' + this.state.selectedOptionIndex]).focus();
       }
     });
@@ -155,6 +163,7 @@ var classBase = React.createClass({
         this.onChange();
 
         if (this.state.open) {
+          this.isFocusing = true;
           React.findDOMNode(this.refs['option' + this.state.selectedOptionIndex]).focus();
         }
       });
@@ -235,6 +244,14 @@ var classBase = React.createClass({
       React.findDOMNode(this.refs['currentOption']).focus(); //eslint-disable-line dot-notation
     });
   },
+  onBlurOption () {
+    // Make sure we only catch blur that wasn't triggered by this component
+    if (this.isFocusing) {
+      this.isFocusing = false;
+    } else {
+      this.toggleOpen();
+    }
+  },
   getWrapperClasses () {
     var wrapperClassNames = [this.props.className];
 
@@ -259,41 +276,52 @@ var classBase = React.createClass({
   },
   renderSpacerChild (child, index) {
     return cloneWithProps(child, {
-      key: index
+      key: index,
+      style: {visibility: 'hidden'}
     });
   },
   render () {
+    var hiddenListStyle = {visibility: 'hidden'};
     var selectedOptionContent = this.state.selectedOptionIndex !== false &&
       this.props.children[this.state.selectedOptionIndex].props.children;
+
+    if (this.props.optionListStyle) {
+      hiddenListStyle = assign({}, this.props.optionListStyle, hiddenListStyle);
+    }
 
     return (
       <div
         className={this.getWrapperClasses()}
         style={this.props.style} >
-        <div
-          ref='currentOption'
-          className={this.props.currentOptionClassName}
-          tabIndex={0}
-          role='button'
-          onFocus={this.onFocus}
-          onKeyDown={this.onKeyDown}
-          onBlur={this.onBlur}
-          onClick={this.toggleOpen}
-          aria-expanded={this.state.open} >
-          {selectedOptionContent || this.props.placeholderText || this.props.children[0].props.children}
-        </div>
+        {this.props.showCurrentOptionWhenOpen || !this.state.open ?
+          <div
+            ref='currentOption'
+            className={this.props.currentOptionClassName}
+            tabIndex={0}
+            role='button'
+            onFocus={this.onFocus}
+            onKeyDown={this.onKeyDown}
+            onBlur={this.onBlur}
+            onClick={this.toggleOpen}
+            aria-expanded={this.state.open}
+            style={this.props.currentOptionStyle}>
+            {selectedOptionContent || this.props.placeholderText || this.props.children[0].props.children}
+          </div>
+          :
+          ''
+        }
         {this.state.open ?
-          <div className={this.props.listClassName} onBlur={this.toggleOpen}>
+          <div className={this.props.listClassName} onBlur={this.onBlurOption} style={this.props.optionListStyle}>
             {React.Children.map(this.props.children, this.renderChild)}
           </div>
           : ''
         }
         <select name={this.props.selectName} value={this.state.selectedOptionVal} className={this.props.hiddenSelectClassName} tabIndex={-1} aria-hidden={true} >
-          {React.Children.map(this.props.children.map, function (child, index) {
+          {React.Children.map(this.props.children, function (child, index) {
             return <option key={index} value={child.props.value}>{child.props.children}</option>
           })}
         </select>
-        <span aria-hidden={true} style={{visibility: 'hidden'}} tabIndex={-1} >
+        <span aria-hidden={true} style={hiddenListStyle} tabIndex={-1} >
           <div style={{visibility: 'hidden', height: 0, position: 'relative'}} >
             {React.Children.map(this.props.children, this.renderSpacerChild)}
           </div>
@@ -343,9 +371,6 @@ classBase.Option = React.createClass({
       hovered: isHover
     });
   },
-  onBlur (ev) {
-    ev.stopPropagation();
-  },
   render () {
     return (
       // Safari ignores tabindex on buttons, and Firefox ignores tabindex on anchors
@@ -354,11 +379,11 @@ classBase.Option = React.createClass({
         role='button'
         className={this.getClassNames()}
         tabIndex={-1}
-        onClick={this.props.onClick}
+        onMouseDown={this.props.onClick}
         onMouseEnter={this.setHover.bind(this, true)}
         onMouseLeave={this.setHover.bind(this, false)}
-        onBlur={this.onBlur}
-        onKeyDown={this.props.onKeyDown}>
+        onKeyDown={this.props.onKeyDown}
+        style={this.props.style}>
         {this.props.children}
       </div>
     );
