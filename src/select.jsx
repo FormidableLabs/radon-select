@@ -11,7 +11,7 @@ var keyboard = {
   downArrow: 40
 };
 
-var doesOptionMatch = function(option, s) {
+var doesOptionMatch = function (option, s) {
   s = s.toLowerCase();
 
   // Check that passed in option wraps a string, if it wraps a component, match val
@@ -25,12 +25,12 @@ var doesOptionMatch = function(option, s) {
 var classBase = React.createClass({
   displayName: 'RadonSelect',
   propTypes: {
-    children: function(props, propName) {
+    children: function (props, propName) {
       if (!props[propName] || !Array.isArray(props[propName])) {
         return new Error('children must be an array of RadonSelect.Option');
       }
 
-      props[propName].forEach(function(child) {
+      props[propName].forEach(function (child) {
         if (child.type.displayName !== 'RadonSelectOption') {
           return new Error('children must be an array of RadonSelect.Option');
         }
@@ -50,7 +50,7 @@ var classBase = React.createClass({
     currentOptionClassName: React.PropTypes.string,
     hiddenSelectClassName: React.PropTypes.string
   },
-  getDefaultProps() {
+  getDefaultProps () {
     return {
       typeaheadDelay: 1000,
       onChange: function () {},
@@ -62,7 +62,7 @@ var classBase = React.createClass({
       hiddenSelectClassName: 'radon-select-hidden-select'
     };
   },
-  getInitialState() {
+  getInitialState () {
     return {
       selectedOptionIndex: false,
       selectedOptionVal: this.props.children[0].props.value,
@@ -70,10 +70,10 @@ var classBase = React.createClass({
       focus: false
     };
   },
-  getValue() {
+  getValue () {
     return this.state.selectedOptionVal;
   },
-  setValue(val, silent) {
+  setValue (val, silent) {
     for (var i = 0; i < this.props.children.length; i++) {
       if (this.props.children[i].props.value === val) {
         this.setState({
@@ -89,10 +89,10 @@ var classBase = React.createClass({
       }
     }
   },
-  onChange() {
+  onChange () {
     this.props.onChange(this.state.selectedOptionVal);
   },
-  moveIndexByOne(decrement) {
+  moveIndexByOne (decrement) {
     var selectedOptionIndex = this.state.selectedOptionIndex || 0;
     // Don't go out of array bounds
     if (decrement && this.state.selectedOptionIndex === 0 ||
@@ -105,7 +105,7 @@ var classBase = React.createClass({
     this.setState({
       selectedOptionIndex: selectedOptionIndex,
       selectedOptionVal: this.props.children[selectedOptionIndex].props.value
-    }, function() {
+    }, function () {
       this.onChange();
 
       if (this.state.open) {
@@ -113,7 +113,7 @@ var classBase = React.createClass({
       }
     });
   },
-  typeahead(character) {
+  typeahead (character) {
     var self = this;
     var matchFound = false;
     var currentIndex = 0;
@@ -151,7 +151,7 @@ var classBase = React.createClass({
       this.setState({
         selectedOptionIndex: matchFound,
         selectedOptionVal: this.props.children[matchFound].props.value
-      }, function() {
+      }, function () {
         this.onChange();
 
         if (this.state.open) {
@@ -160,17 +160,17 @@ var classBase = React.createClass({
       });
     }
 
-    self.typeaheadCountdown = setTimeout(function() {
+    self.typeaheadCountdown = setTimeout(function () {
       self.typeaheadCountdown = undefined;
       self.typingAhead = false;
       self.currentString = '';
     }, this.props.typeaheadDelay)
   },
-  toggleOpen() {
+  toggleOpen () {
     this.setState({
       open: !this.state.open,
       selectedOptionIndex: this.state.selectedOptionIndex || 0
-    }, function() {
+    }, function () {
       this.onChange();
 
       if (!this.state.open) {
@@ -180,19 +180,19 @@ var classBase = React.createClass({
       }
     });
   },
-  onFocus() {
+  onFocus () {
     this.setState({
       focus: true
     });
   },
-  onBlur() {
+  onBlur () {
     this.setState({
       focus: false
     });
   },
   // Arrow keys are only captured by onKeyDown not onKeyPress
   // http://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
-  onKeyDown(ev) {
+  onKeyDown (ev) {
     var isArrowKey = ev.keyCode === keyboard.upArrow || ev.keyCode === keyboard.downArrow;
 
     if (this.state.open) {
@@ -222,20 +222,20 @@ var classBase = React.createClass({
       }
     }
   },
-  onClickOption(index) {
+  onClickOption (index) {
     var child = this.refs['option' + index];
 
     this.setState({
       selectedOptionIndex: index,
       selectedOptionVal: child.props.value,
       open: false
-    }, function() {
+    }, function () {
       this.onChange();
 
       React.findDOMNode(this.refs['currentOption']).focus(); //eslint-disable-line dot-notation
     });
   },
-  getWrapperClasses() {
+  getWrapperClasses () {
     var wrapperClassNames = [this.props.className];
 
     if (this.state.open) {
@@ -248,7 +248,7 @@ var classBase = React.createClass({
 
     return wrapperClassNames.join(' ');
   },
-  renderChild(child, index) {
+  renderChild (child, index) {
     return cloneWithProps(child, {
       key: index,
       ref: 'option' + index,
@@ -257,12 +257,12 @@ var classBase = React.createClass({
       onKeyDown: this.onKeyDown
     });
   },
-  renderSpacerChild(child, index) {
+  renderSpacerChild (child, index) {
     return cloneWithProps(child, {
       key: index
     });
   },
-  render() {
+  render () {
     var selectedOptionContent = this.state.selectedOptionIndex !== false &&
       this.props.children[this.state.selectedOptionIndex].props.children;
 
@@ -286,10 +286,10 @@ var classBase = React.createClass({
           <div className={this.props.listClassName} onBlur={this.toggleOpen}>
             {React.Children.map(this.props.children, this.renderChild)}
           </div>
-          : ""
+          : ''
         }
         <select name={this.props.selectName} value={this.state.selectedOptionVal} className={this.props.hiddenSelectClassName} tabIndex={-1} aria-hidden={true} >
-          {React.Children.map(this.props.children.map, function(child, index) {
+          {React.Children.map(this.props.children.map, function (child, index) {
             return <option key={index} value={child.props.value}>{child.props.children}</option>
           })}
         </select>
@@ -311,21 +311,21 @@ classBase.Option = React.createClass({
     children: React.PropTypes.string.isRequired,
     onClick: React.PropTypes.func
   },
-  getDefaultProps() {
+  getDefaultProps () {
     return {
       value: '',
       className: 'radon-select-option',
       activeClassName: 'active',
       hoverClassName: 'hover',
-      onClick() {}
+      onClick () {}
     };
   },
-  getInitialState() {
+  getInitialState () {
     return {
       hovered: false
     };
   },
-  getClassNames() {
+  getClassNames () {
     var classNames = [this.props.className];
 
     if (this.props.isActive) {
@@ -338,15 +338,15 @@ classBase.Option = React.createClass({
 
     return classNames.join(' ');
   },
-  setHover(isHover) {
+  setHover (isHover) {
     this.setState({
       hovered: isHover
     });
   },
-  onBlur(ev) {
+  onBlur (ev) {
     ev.stopPropagation();
   },
-  render() {
+  render () {
     return (
       // Safari ignores tabindex on buttons, and Firefox ignores tabindex on anchors
       // use a <div role="button">.
