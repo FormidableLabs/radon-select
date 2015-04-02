@@ -73,8 +73,21 @@ var classBase = React.createClass({
   getValue() {
     return this.state.selectedOptionVal;
   },
-  setValue(val) {
-    // TODO: find the option with that value and set it.
+  setValue(val, silent) {
+    for (var i = 0; i < this.props.children.length; i++) {
+      if (this.props.children[i].props.value === val) {
+        this.setState({
+          selectedOptionIndex: i,
+          selectedOptionVal: val
+        }, function () {
+          if (!silent) {
+            this.props.onChange(this.state.selectedOptionVal);
+          }
+        });
+
+        break;
+      }
+    }
   },
   onChange() {
     this.props.onChange(this.state.selectedOptionVal);
@@ -276,7 +289,7 @@ var classBase = React.createClass({
           : ""
         }
         <select name={this.props.selectName} value={this.state.selectedOptionVal} className={this.props.hiddenSelectClassName} tabIndex={-1} aria-hidden={true} >
-          {this.props.children.map(function(child, index) {
+          {React.Children.map(this.props.children.map, function(child, index) {
             return <option key={index} value={child.props.value}>{child.props.children}</option>
           })}
         </select>
