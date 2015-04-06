@@ -176,6 +176,8 @@ var classBase = React.createClass({
     }, this.props.typeaheadDelay)
   },
   toggleOpen () {
+    this.isFocusing = false;
+
     this.setState({
       open: !this.state.open,
       selectedOptionIndex: this.state.selectedOptionIndex || 0
@@ -231,8 +233,10 @@ var classBase = React.createClass({
       }
     }
   },
-  onClickOption (index) {
+  onClickOption (index, ev) {
     var child = this.refs['option' + index];
+
+    ev.preventDefault();
 
     this.setState({
       selectedOptionIndex: index,
