@@ -199,9 +199,13 @@ var classBase = React.createClass({
     });
   },
   onBlur () {
+    var self = this;
+
     this.setState({
       focus: false
-    }, this.props.onBlur);
+    }, function () {
+      self.props.onBlur();
+    });
   },
   // Arrow keys are only captured by onKeyDown not onKeyPress
   // http://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
