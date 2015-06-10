@@ -44,6 +44,7 @@ var classBase = React.createClass({
     typeaheadDelay: React.PropTypes.number,
     showCurrentOptionWhenOpen: React.PropTypes.bool,
     onChange: React.PropTypes.func,
+    onBlur: React.PropTypes.func,
     // Should there just be a baseClassName that these are derived from?
     className: React.PropTypes.string,
     openClassName: React.PropTypes.string,
@@ -197,6 +198,10 @@ var classBase = React.createClass({
     });
   },
   onBlur () {
+    if (this.props.onBlur) {
+      this.props.onBlur();
+    }
+
     this.setState({
       focus: false
     });
