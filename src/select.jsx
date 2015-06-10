@@ -60,6 +60,7 @@ var classBase = React.createClass({
       typeaheadDelay: 1000,
       showCurrentOptionWhenOpen: false,
       onChange: function () {},
+      onBlur: function () {},
       className: 'radon-select',
       openClassName: 'open',
       focusClassName: 'focus',
@@ -198,13 +199,9 @@ var classBase = React.createClass({
     });
   },
   onBlur () {
-    if (this.props.onBlur) {
-      this.props.onBlur();
-    }
-
     this.setState({
       focus: false
-    });
+    }, this.props.onBlur);
   },
   // Arrow keys are only captured by onKeyDown not onKeyPress
   // http://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
