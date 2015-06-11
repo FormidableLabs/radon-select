@@ -79,6 +79,21 @@ var classBase = React.createClass({
       focus: false
     };
   },
+  componentDidMount: function () {
+    window.addEventListener('mousedown', this.pageClick, false);
+  },
+  pageClick: function () {
+    if (this.mouseIsDownOnSelect) { return; }
+    this.setState({
+      open: false
+    });
+  },
+  mouseDownHandler: function () {
+    this.mouseIsDownOnSelect = true;
+  },
+  mouseUpHandler: function () {
+    this.mouseIsDownOnSelect = false;
+  },
   getValue () {
     return this.state.selectedOptionVal;
   },
@@ -118,7 +133,7 @@ var classBase = React.createClass({
       this.onChange();
 
       if (this.state.open) {
-        this.isFocusing = true;
+        this.setState({isFocusing: !this.state.isFocusing});
         React.findDOMNode(this.refs['option' + this.state.selectedOptionIndex]).focus();
       }
     });
@@ -165,7 +180,7 @@ var classBase = React.createClass({
         this.onChange();
 
         if (this.state.open) {
-          this.isFocusing = true;
+          this.setState({isFocusing: !this.state.isFocusing});
           React.findDOMNode(this.refs['option' + this.state.selectedOptionIndex]).focus();
         }
       });
@@ -178,7 +193,7 @@ var classBase = React.createClass({
     }, this.props.typeaheadDelay)
   },
   toggleOpen () {
-    this.isFocusing = false;
+    this.setState({isFocusing: !this.state.isFocusing});
 
     this.setState({
       open: !this.state.open,
@@ -252,8 +267,8 @@ var classBase = React.createClass({
   },
   onBlurOption () {
     // Make sure we only catch blur that wasn't triggered by this component
-    if (this.isFocusing) {
-      this.isFocusing = false;
+    if (this.state.isFocusing) {
+      this.setState({isFocusing: false});
     } else {
       this.toggleOpen();
     }
@@ -309,6 +324,8 @@ var classBase = React.createClass({
             onKeyDown={this.onKeyDown}
             onBlur={this.onBlur}
             onClick={this.toggleOpen}
+            onMouseDown={this.props.onMouseDown}
+            onMouseUp={this.props.onMouseUp}
             aria-expanded={this.state.open}
             style={this.props.currentOptionStyle}>
             {selectedOptionContent || this.props.placeholderText || this.props.children[0].props.children}
