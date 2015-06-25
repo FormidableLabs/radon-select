@@ -1,6 +1,5 @@
 'use strict';
 var React = require('react');
-var cloneWithProps = require('react/lib/cloneWithProps');
 var assign = require('object-assign');
 
 var keyboard = {
@@ -79,6 +78,11 @@ var classBase = React.createClass({
       focus: false
     };
   },
+
+  componentWillUnmount () {
+    this._removeDocClickListener();
+  },
+
   getValue () {
     return this.state.selectedOptionVal;
   },
@@ -118,7 +122,6 @@ var classBase = React.createClass({
       this.onChange();
 
       if (this.state.open) {
-        this.isFocusing = true;
         React.findDOMNode(this.refs['option' + this.state.selectedOptionIndex]).focus();
       }
     });
@@ -165,7 +168,6 @@ var classBase = React.createClass({
         this.onChange();
 
         if (this.state.open) {
-          this.isFocusing = true;
           React.findDOMNode(this.refs['option' + this.state.selectedOptionIndex]).focus();
         }
       });
@@ -177,9 +179,20 @@ var classBase = React.createClass({
       self.currentString = '';
     }, this.props.typeaheadDelay)
   },
-  toggleOpen () {
-    this.isFocusing = false;
+  _handleDocClick (ev) {
+    const chooserEl = React.findDOMNode(this);
 
+    if (!chooserEl.contains(ev.target)) {
+      this.toggleOpen();
+    }
+  },
+  _addDocClickListener () {
+    document.addEventListener('click', this._handleDocClick);
+  },
+  _removeDocClickListener () {
+    document.removeEventListener('click', this._handleDocClick);
+  },
+  toggleOpen () {
     this.setState({
       open: !this.state.open,
       selectedOptionIndex: this.state.selectedOptionIndex || 0
@@ -188,8 +201,10 @@ var classBase = React.createClass({
 
       if (!this.state.open) {
         React.findDOMNode(this.refs['currentOption']).focus(); //eslint-disable-line dot-notation
+        this._removeDocClickListener();
       } else {
         React.findDOMNode(this.refs['option' + (this.state.selectedOptionIndex || 0)]).focus();
+        this._addDocClickListener();
       }
     });
   },
@@ -201,7 +216,7 @@ var classBase = React.createClass({
   onBlur () {
     this.setState({
       focus: false
-    }, () => { this.props.onBlur(); });
+    });
   },
   // Arrow keys are only captured by onKeyDown not onKeyPress
   // http://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
@@ -242,21 +257,11 @@ var classBase = React.createClass({
 
     this.setState({
       selectedOptionIndex: index,
-      selectedOptionVal: child.props.value,
-      open: false
+      selectedOptionVal: child.props.value
     }, function () {
       this.onChange();
-
-      React.findDOMNode(this.refs['currentOption']).focus(); //eslint-disable-line dot-notation
-    });
-  },
-  onBlurOption () {
-    // Make sure we only catch blur that wasn't triggered by this component
-    if (this.isFocusing) {
-      this.isFocusing = false;
-    } else {
       this.toggleOpen();
-    }
+    });
   },
   getWrapperClasses () {
     var wrapperClassNames = [this.props.className];
@@ -272,7 +277,7 @@ var classBase = React.createClass({
     return wrapperClassNames.join(' ');
   },
   renderChild (child, index) {
-    return cloneWithProps(child, {
+    return React.cloneElement(child, {
       key: index,
       ref: 'option' + index,
       isActive: this.state.selectedOptionIndex === index,
@@ -281,7 +286,7 @@ var classBase = React.createClass({
     });
   },
   renderSpacerChild (child, index) {
-    return cloneWithProps(child, {
+    return React.cloneElement(child, {
       key: index,
       style: {visibility: 'hidden'}
     });
@@ -317,7 +322,7 @@ var classBase = React.createClass({
           ''
         }
         {this.state.open ?
-          <div className={this.props.listClassName} onBlur={this.onBlurOption} style={this.props.optionListStyle}>
+          <div className={this.props.listClassName} style={this.props.optionListStyle}>
             {React.Children.map(this.props.children, this.renderChild)}
           </div>
           : ''
