@@ -5,6 +5,7 @@
     "mocha": true
   },
   "parser": "babel-eslint",
+  "plugins": ["react"],
   "ecmaFeatures": {
     "arrowFunctions": true,
     "binaryLiterals": true,

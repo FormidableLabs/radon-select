@@ -4,7 +4,8 @@
   "description": "React select box replacement component",
   "main": "index.js",
   "scripts": {
-    "examples": "webpack-dev-server --config examples/webpack.config.js --no-info --content-base examples/"
+    "examples": "webpack-dev-server --config examples/webpack.config.js --no-info --content-base examples/",
+    "lint": "eslint src/select.jsx"
   },
   "author": "",
   "license": "MIT",
@@ -16,6 +17,8 @@
     "babel-eslint": "^2.0.2",
     "babel-loader": "^4.3.0",
     "chai": "^2.1.2",
+    "eslint": "^0.24.1",
+    "eslint-plugin-react": "^2.7.0",
     "gulp": "^3.8.11",
     "gulp-eslint": "^0.6.0",
     "gulp-react": "^3.0.1",
