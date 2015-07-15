@@ -1,6 +1,5 @@
 'use strict';
 var React = require('react');
-var cloneWithProps = require('react/lib/cloneWithProps');
 var assign = require('object-assign');
 
 React.initializeTouchEvents(true);
@@ -274,7 +273,7 @@ var classBase = React.createClass({
     return wrapperClassNames.join(' ');
   },
   renderChild (child, index) {
-    return cloneWithProps(child, {
+    return React.cloneElement(child, {
       key: index,
       ref: 'option' + index,
       isActive: this.state.selectedOptionIndex === index,
@@ -283,7 +282,7 @@ var classBase = React.createClass({
     });
   },
   renderSpacerChild (child, index) {
-    return cloneWithProps(child, {
+    return React.cloneElement(child, {
       key: index,
       style: {visibility: 'hidden'}
     });

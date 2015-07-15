@@ -1,5 +1,5 @@
 var React = require('react');
-var RadonSelect = require('../lib/select.js');
+var RadonSelect = require('../src/select.jsx');
 
 var App = React.createClass({
   displayName: "App",
