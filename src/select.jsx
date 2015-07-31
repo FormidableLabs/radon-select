@@ -278,7 +278,8 @@ var classBase = React.createClass({
       ref: 'option' + index,
       isActive: this.state.selectedOptionIndex === index,
       onClick: this.onClickOption.bind(this, index),
-      onKeyDown: this.onKeyDown
+      onKeyDown: this.onKeyDown,
+      automationId: (this.props.automationId ? this.props.automationId : 'select') + '-option-' + index
     });
   },
   renderSpacerChild (child, index) {
@@ -305,6 +306,7 @@ var classBase = React.createClass({
             ref='currentOption'
             className={this.props.currentOptionClassName}
             tabIndex={0}
+            data-automation-id={this.props.automationId}
             role='button'
             onFocus={this.onFocus}
             onKeyDown={this.onKeyDown}
@@ -344,11 +346,13 @@ classBase.Option = React.createClass({
     // TODO: Disabled
     value: React.PropTypes.string.isRequired,
     children: React.PropTypes.string.isRequired,
-    onClick: React.PropTypes.func
+    onClick: React.PropTypes.func,
+    automationId: React.PropTypes.string
   },
   getDefaultProps () {
     return {
       value: '',
+      automationId: undefined,
       className: 'radon-select-option',
       activeClassName: 'active',
       hoverClassName: 'hover',
@@ -391,6 +395,7 @@ classBase.Option = React.createClass({
       <div
         role='button'
         className={this.getClassNames()}
+        data-automation-id={this.props.automationId}
         tabIndex={-1}
 
         // This is a workaround for a long-standing iOS/React issue with click events.
