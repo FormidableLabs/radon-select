@@ -7,8 +7,7 @@
     "examples": "webpack-dev-server --config examples/webpack.config.js --no-info --content-base examples/",
     "lib": "rimraf lib && babel --stage 0 src/ -d lib/",
     "lint": "eslint src/select.jsx",
-    "postinstall": "node -e \"require('fs').stat('lib', function(e,s){process.exit(e || !s.isDirectory() ? 1 : 0)})\" || npm run prepublish",
-    "prepublish": "npm test && npm run lint && npm run lib",
+    "prepublish": "npm run lib",
     "test": "karma start"
   },
   "author": "",
