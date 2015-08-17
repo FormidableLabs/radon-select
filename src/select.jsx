@@ -285,7 +285,12 @@ var classBase = React.createClass({
   renderSpacerChild (child, index) {
     return React.cloneElement(child, {
       key: index,
-      style: {visibility: 'hidden'}
+      style: {
+        visibility: 'hidden',
+        height: '0 !important',
+        paddingTop: 0,
+        paddingBottom: 0
+      }
     });
   },
   render () {
