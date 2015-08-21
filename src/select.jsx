@@ -251,7 +251,13 @@ var classBase = React.createClass({
       React.findDOMNode(this.refs['currentOption']).focus(); //eslint-disable-line dot-notation
     });
   },
-  onBlurOption () {
+  onBlurOption (ev) {
+    // Sometimes clicks on the scrollbar trigger blur
+    // the target is still a select option so do not close the select
+    if (React.findDOMNode(this).contains(ev.target)) {
+      return;
+    }
+
     // Make sure we only catch blur that wasn't triggered by this component
     if (this.isFocusing) {
       this.isFocusing = false;
