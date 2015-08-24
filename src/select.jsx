@@ -252,17 +252,26 @@ var classBase = React.createClass({
     });
   },
   onBlurOption (ev) {
-    // Sometimes clicks on the scrollbar trigger blur
-    // the target is still a select option so do not close the select
-    if (React.findDOMNode(this).contains(ev.target)) {
-      return;
-    }
-
     // Make sure we only catch blur that wasn't triggered by this component
     if (this.isFocusing) {
       this.isFocusing = false;
-    } else {
-      this.toggleOpen();
+
+      return;
+    }
+
+    var hoveredSelectEl = React.findDOMNode(this).querySelector(':hover');
+    // Clicks on the scrollbar trigger blur, only test is hover.
+    // If the mouse is over the select, don't close the option list
+    if (hoveredSelectEl) {
+      return;
+    }
+
+    this.toggleOpen();
+  },
+  onMouseDown (ev) {
+    // Make sure that clicks on the scrollbar don't steal focus
+    if (this.state.open) {
+      ev.preventDefault();
     }
   },
   getWrapperClasses () {
@@ -311,6 +320,7 @@ var classBase = React.createClass({
     return (
       <div
         className={this.getWrapperClasses()}
+        onMouseDown={this.onMouseDown}
         style={this.props.style} >
         {this.props.showCurrentOptionWhenOpen || !this.state.open ?
           <div
