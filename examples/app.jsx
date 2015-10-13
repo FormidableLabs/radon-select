@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var RadonSelect = require('../src/select.jsx');
 
 var App = React.createClass({
@@ -74,4 +75,4 @@ var App = React.createClass({
   }
 });
 
-React.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
