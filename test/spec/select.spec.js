@@ -3,7 +3,7 @@
 describe('Button', function () {
 
   var React = require('react');
-  var TestUtils = require('react/lib/ReactTestUtils');
+  var TestUtils = require('react-addons-test-utils');
 
   var RadonSelect = require('select.jsx');
   var container, component;
