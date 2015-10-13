@@ -2,8 +2,6 @@
 var React = require('react');
 var assign = require('object-assign');
 
-React.initializeTouchEvents(true);
-
 var keyboard = {
   space: 32,
   enter: 13,
