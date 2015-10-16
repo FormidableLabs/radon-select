@@ -16,7 +16,7 @@ var App = React.createClass({
   },
   setCarValue(ev) {
     ev.preventDefault();
-    this.refs.car.setValue(React.findDOMNode(this.refs.newCar).value.trim());
+    this.refs.car.setValue(ReactDOM.findDOMNode(this.refs.newCar).value.trim());
   },
   render() {
     return (
