@@ -344,7 +344,7 @@ var classBase = React.createClass({
           </div>
           : ''
         }
-        <select name={this.props.selectName} value={this.state.selectedOptionVal} className={this.props.hiddenSelectClassName} tabIndex={-1} aria-hidden={true} >
+        <select readonly="readonly" name={this.props.selectName} value={this.state.selectedOptionVal} className={this.props.hiddenSelectClassName} tabIndex={-1} aria-hidden={true} >
           {React.Children.map(this.props.children, function (child, index) {
             return <option key={index} value={child.props.value}>{child.props.children}</option>
           })}
