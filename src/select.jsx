@@ -249,7 +249,7 @@ var classBase = React.createClass({
       React.findDOMNode(this.refs['currentOption']).focus(); //eslint-disable-line dot-notation
     });
   },
-  onBlurOption (ev) {
+  onBlurOption () {
     // Make sure we only catch blur that wasn't triggered by this component
     if (this.isFocusing) {
       this.isFocusing = false;
@@ -344,7 +344,7 @@ var classBase = React.createClass({
           </div>
           : ''
         }
-        <select name={this.props.selectName} value={this.state.selectedOptionVal} className={this.props.hiddenSelectClassName} tabIndex={-1} aria-hidden={true} >
+        <select name={this.props.selectName} onChange={() => {}} value={this.state.selectedOptionVal} className={this.props.hiddenSelectClassName} tabIndex={-1} aria-hidden={true} >
           {React.Children.map(this.props.children, function (child, index) {
             return <option key={index} value={child.props.value}>{child.props.children}</option>
           })}
