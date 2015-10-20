@@ -249,7 +249,7 @@ var classBase = React.createClass({
       React.findDOMNode(this.refs['currentOption']).focus(); //eslint-disable-line dot-notation
     });
   },
-  onBlurOption (ev) {
+  onBlurOption () {
     // Make sure we only catch blur that wasn't triggered by this component
     if (this.isFocusing) {
       this.isFocusing = false;
