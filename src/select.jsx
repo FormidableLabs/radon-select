@@ -119,7 +119,7 @@ var classBase = React.createClass({
 
       if (this.state.open) {
         this.isFocusing = true;
-        ReactDOM.findDOMNode(this.refs['option' + this.state.selectedOptionIndex]).focus();
+        this.refs['option' + this.state.selectedOptionIndex].focus();
       }
     });
   },
@@ -166,7 +166,7 @@ var classBase = React.createClass({
 
         if (this.state.open) {
           this.isFocusing = true;
-          ReactDOM.findDOMNode(this.refs['option' + this.state.selectedOptionIndex]).focus();
+          this.refs['option' + this.state.selectedOptionIndex].focus();
         }
       });
     }
@@ -187,7 +187,7 @@ var classBase = React.createClass({
       this.onChange();
 
       if (!this.state.open) {
-        ReactDOM.findDOMNode(this.refs['currentOption']).focus(); //eslint-disable-line dot-notation
+        this.refs['currentOption'].focus(); //eslint-disable-line dot-notation
       } else {
         ReactDOM.findDOMNode(this.refs['option' + (this.state.selectedOptionIndex || 0)]).focus();
       }
@@ -247,7 +247,7 @@ var classBase = React.createClass({
     }, function () {
       this.onChange();
 
-      ReactDOM.findDOMNode(this.refs['currentOption']).focus(); //eslint-disable-line dot-notation
+      this.refs['currentOption'].focus(); //eslint-disable-line dot-notation
     });
   },
   onBlurOption () {
