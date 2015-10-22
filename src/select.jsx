@@ -1,5 +1,6 @@
 'use strict';
 var React = require('react');
+var ReactDOM = require('react-dom');
 var assign = require('object-assign');
 
 var keyboard = {
@@ -118,7 +119,7 @@ var classBase = React.createClass({
 
       if (this.state.open) {
         this.isFocusing = true;
-        React.findDOMNode(this.refs['option' + this.state.selectedOptionIndex]).focus();
+        this.refs['option' + this.state.selectedOptionIndex].focus();
       }
     });
   },
@@ -165,7 +166,7 @@ var classBase = React.createClass({
 
         if (this.state.open) {
           this.isFocusing = true;
-          React.findDOMNode(this.refs['option' + this.state.selectedOptionIndex]).focus();
+          this.refs['option' + this.state.selectedOptionIndex].focus();
         }
       });
     }
@@ -186,9 +187,9 @@ var classBase = React.createClass({
       this.onChange();
 
       if (!this.state.open) {
-        React.findDOMNode(this.refs['currentOption']).focus(); //eslint-disable-line dot-notation
+        this.refs['currentOption'].focus(); //eslint-disable-line dot-notation
       } else {
-        React.findDOMNode(this.refs['option' + (this.state.selectedOptionIndex || 0)]).focus();
+        ReactDOM.findDOMNode(this.refs['option' + (this.state.selectedOptionIndex || 0)]).focus();
       }
     });
   },
@@ -246,10 +247,10 @@ var classBase = React.createClass({
     }, function () {
       this.onChange();
 
-      React.findDOMNode(this.refs['currentOption']).focus(); //eslint-disable-line dot-notation
+      this.refs['currentOption'].focus(); //eslint-disable-line dot-notation
     });
   },
-  onBlurOption (ev) {
+  onBlurOption () {
     // Make sure we only catch blur that wasn't triggered by this component
     if (this.isFocusing) {
       this.isFocusing = false;
@@ -257,7 +258,7 @@ var classBase = React.createClass({
       return;
     }
 
-    var hoveredSelectEl = React.findDOMNode(this).querySelector(':hover');
+    var hoveredSelectEl = ReactDOM.findDOMNode(this).querySelector(':hover');
     // Clicks on the scrollbar trigger blur, only test is hover.
     // If the mouse is over the select, don't close the option list
     if (hoveredSelectEl) {
@@ -344,10 +345,16 @@ var classBase = React.createClass({
           </div>
           : ''
         }
-        <select name={this.props.selectName} value={this.state.selectedOptionVal} className={this.props.hiddenSelectClassName} tabIndex={-1} aria-hidden={true} >
-          {React.Children.map(this.props.children, function (child, index) {
-            return <option key={index} value={child.props.value}>{child.props.children}</option>
-          })}
+        <select
+          disabled='true'
+          name={this.props.selectName}
+          value={this.state.selectedOptionVal}
+          className={this.props.hiddenSelectClassName}
+          tabIndex={-1}
+          aria-hidden={true} >
+            {React.Children.map(this.props.children, function (child, index) {
+              return <option key={index} value={child.props.value}>{child.props.children}</option>
+            })}
         </select>
         <span aria-hidden={true} style={hiddenListStyle} tabIndex={-1} >
           <div style={{visibility: 'hidden', height: 0, position: 'relative'}} >
