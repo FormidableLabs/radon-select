@@ -119,7 +119,7 @@ var classBase = React.createClass({
 
       if (this.state.open) {
         this.isFocusing = true;
-        this.refs['option' + this.state.selectedOptionIndex].focus();
+        ReactDOM.findDOMNode(this.refs['option' + this.state.selectedOptionIndex]).focus();
       }
     });
   },
