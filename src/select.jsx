@@ -72,30 +72,41 @@ var classBase = React.createClass({
     };
   },
   getInitialState () {
+    var initialIndex = this.getValueIndex(this.props.defaultValue);
+    var defaultValue = initialIndex===-1
+      ? this.props.children[0].props.value
+      : this.props.defaultValue;
+
     return {
-      selectedOptionIndex: false,
-      selectedOptionVal: this.props.children[0].props.value,
+      selectedOptionIndex: initialIndex === -1 ? false : initialIndex,
+      selectedOptionVal: defaultValue,
       open: false,
       focus: false
     };
+  },
+  getValueIndex (val) {
+    for (var i = 0; i < this.props.children.length; ++i) {
+      if (this.props.children[i].props.value === val) {
+        return i;
+      }
+    }
+    return -1;
   },
   getValue () {
     return this.state.selectedOptionVal;
   },
   setValue (val, silent) {
-    for (var i = 0; i < this.props.children.length; i++) {
-      if (this.props.children[i].props.value === val) {
-        this.setState({
-          selectedOptionIndex: i,
-          selectedOptionVal: val
-        }, function () {
-          if (!silent) {
-            this.props.onChange(this.state.selectedOptionVal);
-          }
-        });
+    var index = this.getValueIndex(val);
 
-        break;
-      }
+    if (index !== -1) {
+      this.setState({
+        selectedOptionIndex: index,
+        selectedOptionVal: val
+      }, function () {
+        if (!silent) {
+          this.props.onChange(this.state.selectedOptionVal);
+        }
+      });
     }
   },
   onChange () {
