@@ -6,7 +6,7 @@ var App = React.createClass({
   displayName: "App",
   getInitialState() {
     return {
-      carValue: "audi"
+      carValue: "bmw"
     };
   },
   onCarChange(val) {
@@ -54,7 +54,7 @@ var App = React.createClass({
         <br />
         <br />
         <h3>Get and set values</h3>
-        <RadonSelect ref="car" selectName="car" onChange={this.onCarChange}>
+        <RadonSelect ref="car" selectName="car" defaultValue={this.state.carValue} onChange={this.onCarChange}>
           <RadonSelect.Option value="audi">audi</RadonSelect.Option>
           <RadonSelect.Option value="bmw">bmw</RadonSelect.Option>
           <RadonSelect.Option value="infiniti">infiniti</RadonSelect.Option>
