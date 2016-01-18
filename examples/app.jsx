@@ -54,6 +54,17 @@ var App = React.createClass({
         <br />
         <br />
         <h3>Get and set values</h3>
+        <RadonSelect ref="fruits" selectName="fruits" defaultValue="apple">
+          <RadonSelect.Option value="apple">
+            <h1 style={{margin:"0px"}}>apple</h1>
+          </RadonSelect.Option>
+          <RadonSelect.Option value="orange">
+            <h1 style={{margin:"0px"}}>orange</h1>
+          </RadonSelect.Option>          
+        </RadonSelect>
+        <br />
+        <br />
+        <h3>Get and set values</h3>
         <RadonSelect ref="car" selectName="car" defaultValue={this.state.carValue} onChange={this.onCarChange}>
           <RadonSelect.Option value="audi">audi</RadonSelect.Option>
           <RadonSelect.Option value="bmw">bmw</RadonSelect.Option>
