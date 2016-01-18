@@ -387,7 +387,7 @@ classBase.Option = React.createClass({
   propTypes: {
     // TODO: Disabled
     value: React.PropTypes.string.isRequired,
-    children: React.PropTypes.node.isRequired,
+    children: React.PropTypes.oneOfType([React.PropTypes.node, React.PropTypes.string]).isRequired,
     onClick: React.PropTypes.func,
     automationId: React.PropTypes.string
   },
