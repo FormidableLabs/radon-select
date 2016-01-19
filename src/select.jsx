@@ -369,7 +369,7 @@ var classBase = React.createClass({
           tabIndex={-1}
           aria-hidden={true} >
             {React.Children.map(this.props.children, function (child, index) {
-              return <option key={index} value={child.props.value}>{child.props.children}</option>
+              return <option key={index} value={child.props.value}>{child.props.value}</option>
             })}
         </select>
         <span aria-hidden={true} style={hiddenListStyle} tabIndex={-1} >
@@ -387,7 +387,7 @@ classBase.Option = React.createClass({
   propTypes: {
     // TODO: Disabled
     value: React.PropTypes.string.isRequired,
-    children: React.PropTypes.string.isRequired,
+    children: React.PropTypes.oneOfType([React.PropTypes.node, React.PropTypes.string]).isRequired,
     onClick: React.PropTypes.func,
     automationId: React.PropTypes.string
   },
