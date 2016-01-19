@@ -369,8 +369,7 @@ var classBase = React.createClass({
           tabIndex={-1}
           aria-hidden={true} >
             {React.Children.map(this.props.children, function (child, index) {
-              var value = child.props.value || child.props.children;
-              return <option key={index} value={child.props.value}>{value}</option>
+              return <option key={index} value={child.props.value}>{child.props.value}</option>
             })}
         </select>
         <span aria-hidden={true} style={hiddenListStyle} tabIndex={-1} >
