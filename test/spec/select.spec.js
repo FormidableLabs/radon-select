@@ -3,6 +3,7 @@
 describe('Button', function () {
 
   var React = require('react');
+  var ReactDOM = require('react-dom');
   var TestUtils = require('react-addons-test-utils');
 
   var RadonSelect = require('select.jsx');
@@ -12,7 +13,7 @@ describe('Button', function () {
 
     beforeEach(function() {
       container = document.createElement('div');
-      component = React.render(
+      component = ReactDOM.render(
         React.createElement(RadonSelect, {selectName: "test"}, [
           React.createElement(RadonSelect.Option, {key: "blah"}, "blah"),
           React.createElement(RadonSelect.Option, {key: "foo"}, "foo")
@@ -22,7 +23,7 @@ describe('Button', function () {
     });
 
     afterEach(function() {
-      React.unmountComponentAtNode(container);
+      ReactDOM.unmountComponentAtNode(container);
     });
 
     it('should render into the document', function() {
