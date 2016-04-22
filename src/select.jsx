@@ -251,7 +251,8 @@ var classBase = React.createClass({
   onClickOption (index, ev) {
     var child = this.refs['option' + index];
 
-    ev.preventDefault();
+    // Null safety here prevents an iOS-specific bug preventing selection of options
+    ev ? ev.preventDefault() : null;
 
     this.setState({
       selectedOptionIndex: index,
