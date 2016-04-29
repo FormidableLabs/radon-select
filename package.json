@@ -1,6 +1,6 @@
 {
   "name": "radon-select",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "React select box replacement component",
   "main": "index.js",
   "scripts": {
