@@ -19,7 +19,7 @@ var doesOptionMatch = function (option, s) {
   if (typeof option.props.children === 'string') {
     return option.props.children.toLowerCase().indexOf(s) === 0;
   } else {
-    return option.props.value.tolowerCase().indexOf(s) === 0;
+    return option.props.value.toLowerCase().indexOf(s) === 0;
   }
 }
 
