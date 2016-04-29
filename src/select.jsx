@@ -42,6 +42,7 @@ var classBase = React.createClass({
     placeholderText: React.PropTypes.string,
     typeaheadDelay: React.PropTypes.number,
     showCurrentOptionWhenOpen: React.PropTypes.bool,
+    disabled: React.PropTypes.bool,
     onChange: React.PropTypes.func,
     onBlur: React.PropTypes.func,
     // Should there just be a baseClassName that these are derived from?
@@ -49,6 +50,7 @@ var classBase = React.createClass({
     openClassName: React.PropTypes.string,
     focusClassName: React.PropTypes.string,
     listClassName: React.PropTypes.string,
+    disabledClassName: React.PropTypes.string,
     currentOptionClassName: React.PropTypes.string,
     hiddenSelectClassName: React.PropTypes.string,
     currentOptionStyle: React.PropTypes.object,
@@ -56,6 +58,7 @@ var classBase = React.createClass({
   },
   getDefaultProps () {
     return {
+      disabled: false,
       typeaheadDelay: 1000,
       showCurrentOptionWhenOpen: false,
       onChange: function () {},
@@ -66,6 +69,7 @@ var classBase = React.createClass({
       listClassName: 'radon-select-list',
       currentOptionClassName: 'radon-select-current',
       hiddenSelectClassName: 'radon-select-hidden-select',
+      disabledClassName: 'radon-select-disabled',
       currentOptionStyle: {},
       optionListStyle: {}
     };
@@ -191,6 +195,10 @@ var classBase = React.createClass({
     }, this.props.typeaheadDelay)
   },
   toggleOpen () {
+    if (this.props.disabled) {
+      return;
+    }
+
     this.isFocusing = false;
 
     this.setState({
@@ -296,6 +304,10 @@ var classBase = React.createClass({
 
     if (this.state.focus) {
       wrapperClassNames.push(this.props.focusClassName);
+    }
+
+    if (this.props.disabled) {
+      wrapperClassNames.push(this.props.disabledClassName);
     }
 
     return wrapperClassNames.join(' ');
