@@ -377,6 +377,7 @@ var classBase = React.createClass({
         <select
           disabled='true'
           name={this.props.selectName}
+          title={this.props.selectName}
           value={this.state.selectedOptionVal}
           className={this.props.hiddenSelectClassName}
           tabIndex={-1}
