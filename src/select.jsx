@@ -437,12 +437,6 @@ classBase.Option = React.createClass({
       hovered: isHover
     });
   },
-  tap () {
-    // Call onClick indirectly so that React's Synthetic Touch Event doesn't propagate.
-    // The resulting behavior should be that an options dropdown list can be scrolled
-    // and only selects an option when a user has tapped an option without dragging the parent.
-    this.props.onClick();
-  },
   render () {
     return (
       // Safari ignores tabindex on buttons, and Firefox ignores tabindex on anchors
@@ -452,11 +446,6 @@ classBase.Option = React.createClass({
         className={this.getClassNames()}
         data-automation-id={this.props.automationId}
         tabIndex={-1}
-
-        // This is a workaround for a long-standing iOS/React issue with click events.
-        // See https://github.com/facebook/react/issues/134 for more information.
-        onTouchStart={this.tap}
-
         onMouseDown={this.props.onClick}
         onMouseEnter={this.setHover.bind(this, true)}
         onMouseLeave={this.setHover.bind(this, false)}
