@@ -74,7 +74,7 @@ var classBase = React.createClass({
       optionListStyle: {}
     };
   },
-  _getInitialIndex(defaultValue) {
+  _getInitialIndex (defaultValue) {
     return defaultValue !== undefined
       ? this.getValueIndex(defaultValue)
       : -1;
@@ -93,9 +93,9 @@ var classBase = React.createClass({
       focus: false
     };
   },
-  componentWillReceiveProps(nextProps) {
-    if(nextProps && this.props && nextProps.defaultValue !== this.props.defaultValue) {
-      var initialIndex =this._getInitialIndex(nextProps.defaultValue);
+  componentWillReceiveProps (nextProps) {
+    if (nextProps && this.props && nextProps.defaultValue !== this.props.defaultValue) {
+      var initialIndex = this._getInitialIndex(nextProps.defaultValue);
       this.setState({
         selectedOptionVal: nextProps.defaultValue,
         selectedOptionIndex: initialIndex
@@ -272,7 +272,7 @@ var classBase = React.createClass({
     var child = this.refs['option' + index];
 
     // Null safety here prevents an iOS-specific bug preventing selection of options
-    ev ? ev.preventDefault() : null;
+    ev ? ev.preventDefault() : null; //eslint-disable-line
 
     this.setState({
       selectedOptionIndex: index,
@@ -324,7 +324,7 @@ var classBase = React.createClass({
 
     return wrapperClassNames.join(' ');
   },
-  focus(ref) {
+  focus (ref) {
     ReactDOM.findDOMNode(ref).focus();
   },
   renderChild (child, index) {
