@@ -99,7 +99,7 @@ var classBase = React.createClass({
       this.setState({
         selectedOptionVal: nextProps.defaultValue,
         selectedOptionIndex: initialIndex
-      })
+      });
     }
   },
   getValueIndex (val) {
