@@ -2,6 +2,50 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var RadonSelect = require('../src/select.jsx');
 
+var StatefulRadonSelect = React.createClass({
+  getInitialState() {
+    return {
+      cityCode: "SF",
+      cityName: "San Fransisco"
+    }
+  },
+  changeCity(ev) {
+    this.setState({
+      cityCode: ev.target.dataset.city,
+      cityName: ev.target.dataset.name
+    });
+  },
+  onCityChange(val) {
+    var name = val === "KC"
+      ? "Kansas City"
+      : "San Fransisco";
+
+    this.setState({
+      cityCode: val,
+      cityName: name
+    });
+  },
+  render() {
+    return (
+      <div>
+        <RadonSelect
+          selectName={this.state.cityName}
+          defaultValue={this.state.cityCode}
+          onChange={this.onCityChange}>
+          <RadonSelect.Option value="SF">San Fransisco</RadonSelect.Option>
+          <RadonSelect.Option value="KC">Kansas City</RadonSelect.Option>
+        </RadonSelect>
+        <button data-city="SF" data-name="San Fransisco" onClick={this.changeCity}>
+          Set San Fransisco
+        </button>
+        <button data-city="KC" data-name="Kansas City" onClick={this.changeCity}>
+          Set Kansas City
+        </button>
+      </div>
+    );
+  }
+});
+
 var App = React.createClass({
   displayName: "App",
   getInitialState() {
@@ -60,7 +104,7 @@ var App = React.createClass({
           </RadonSelect.Option>
           <RadonSelect.Option value="orange">
             <h1 style={{margin:"0px"}}>orange</h1>
-          </RadonSelect.Option>          
+          </RadonSelect.Option>
         </RadonSelect>
         <br />
         <br />
@@ -81,6 +125,8 @@ var App = React.createClass({
             <button type="submit">set</button>
           </form>
         </span>
+        <h3>Get and Set  Values passed as props from parent</h3>
+        <StatefulRadonSelect/>
       </div>
     );
   }

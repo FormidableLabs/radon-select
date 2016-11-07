@@ -74,10 +74,13 @@ var classBase = React.createClass({
       optionListStyle: {}
     };
   },
-  getInitialState () {
-    var initialIndex = this.props.defaultValue !== undefined
-      ? this.getValueIndex(this.props.defaultValue)
+  _getInitialIndex(defaultValue) {
+    return defaultValue !== undefined
+      ? this.getValueIndex(defaultValue)
       : -1;
+  },
+  getInitialState () {
+    var initialIndex = this._getInitialIndex(this.props.defaultValue);
 
     var defaultValue = initialIndex === -1
       ? this.props.children[0].props.value
@@ -89,6 +92,15 @@ var classBase = React.createClass({
       open: false,
       focus: false
     };
+  },
+  componentWillReceiveProps(nextProps) {
+    if(nextProps && this.props && nextProps.defaultValue !== this.props.defaultValue) {
+      var initialIndex =this._getInitialIndex(nextProps.defaultValue);
+      this.setState({
+        selectedOptionVal: nextProps.defaultValue,
+        selectedOptionIndex: initialIndex
+      })
+    }
   },
   getValueIndex (val) {
     for (var i = 0; i < this.props.children.length; ++i) {
