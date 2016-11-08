@@ -39,6 +39,7 @@ var classBase = React.createClass({
     },
     selectName: React.PropTypes.string.isRequired,
     defaultValue: React.PropTypes.string,
+    selectedValue: React.PropTypes.string,
     placeholderText: React.PropTypes.string,
     typeaheadDelay: React.PropTypes.number,
     showCurrentOptionWhenOpen: React.PropTypes.bool,
@@ -80,11 +81,13 @@ var classBase = React.createClass({
       : -1;
   },
   getInitialState () {
-    var initialIndex = this._getInitialIndex(this.props.defaultValue);
+    // if selectedValue is passed as prop, use it or else use defaultValue.
+    var selectedValue = this.props.selectedValue || this.props.defaultValue;
+    var initialIndex = this._getInitialIndex(selectedValue);
 
     var defaultValue = initialIndex === -1
       ? this.props.children[0].props.value
-      : this.props.defaultValue;
+      : selectedValue;
 
     return {
       selectedOptionIndex: initialIndex === -1 ? false : initialIndex,
@@ -94,10 +97,10 @@ var classBase = React.createClass({
     };
   },
   componentWillReceiveProps (nextProps) {
-    if (nextProps && this.props && nextProps.defaultValue !== this.props.defaultValue) {
-      var initialIndex = this._getInitialIndex(nextProps.defaultValue);
+    if (nextProps && this.props && nextProps.selectedValue !== this.props.selectedValue) {
+      var initialIndex = this._getInitialIndex(nextProps.selectedValue);
       this.setState({
-        selectedOptionVal: nextProps.defaultValue,
+        selectedOptionVal: nextProps.selectedValue,
         selectedOptionIndex: initialIndex
       });
     }

@@ -31,6 +31,7 @@ var StatefulRadonSelect = React.createClass({
         <RadonSelect
           selectName={this.state.cityName}
           defaultValue={this.state.cityCode}
+          selectedValue={this.state.cityCode}
           onChange={this.onCityChange}>
           <RadonSelect.Option value="SF">San Fransisco</RadonSelect.Option>
           <RadonSelect.Option value="KC">Kansas City</RadonSelect.Option>
