@@ -39,6 +39,7 @@ var classBase = React.createClass({
     },
     selectName: React.PropTypes.string.isRequired,
     defaultValue: React.PropTypes.string,
+    areaLabel: React.PropTypes.string,
     placeholderText: React.PropTypes.string,
     typeaheadDelay: React.PropTypes.number,
     showCurrentOptionWhenOpen: React.PropTypes.bool,
@@ -380,6 +381,7 @@ var classBase = React.createClass({
           value={this.state.selectedOptionVal}
           className={this.props.hiddenSelectClassName}
           tabIndex={-1}
+          aria-label={this.props.areaLabel ? this.props.areaLabel : this.props.selectName }
           aria-hidden={true} >
             {React.Children.map(this.props.children, function (child, index) {
               return <option key={index} value={child.props.value}>{child.props.value}</option>
