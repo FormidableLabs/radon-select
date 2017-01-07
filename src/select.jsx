@@ -55,7 +55,8 @@ var classBase = React.createClass({
     currentOptionClassName: React.PropTypes.string,
     hiddenSelectClassName: React.PropTypes.string,
     currentOptionStyle: React.PropTypes.object,
-    optionListStyle: React.PropTypes.object
+    optionListStyle: React.PropTypes.object,
+    disableAutoRefresh: React.PropTypes.bool
   },
   getDefaultProps () {
     return {
@@ -72,7 +73,8 @@ var classBase = React.createClass({
       hiddenSelectClassName: 'radon-select-hidden-select',
       disabledClassName: 'radon-select-disabled',
       currentOptionStyle: {},
-      optionListStyle: {}
+      optionListStyle: {},
+      disableAutoRefresh: false
     };
   },
   getInitialState () {
@@ -133,7 +135,9 @@ var classBase = React.createClass({
       selectedOptionIndex: selectedOptionIndex,
       selectedOptionVal: this.props.children[selectedOptionIndex].props.value
     }, function () {
-      this.onChange();
+      if (!this.props.disableAutoRefresh) {
+        this.onChange();
+      }
 
       if (this.state.open) {
         this.isFocusing = true;
