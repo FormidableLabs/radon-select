@@ -56,7 +56,7 @@ var classBase = React.createClass({
     hiddenSelectClassName: React.PropTypes.string,
     currentOptionStyle: React.PropTypes.object,
     optionListStyle: React.PropTypes.object,
-    disableAutoRefresh: React.PropTypes.bool
+    disableUpDownAutoRefresh: React.PropTypes.bool
   },
   getDefaultProps () {
     return {
@@ -74,7 +74,7 @@ var classBase = React.createClass({
       disabledClassName: 'radon-select-disabled',
       currentOptionStyle: {},
       optionListStyle: {},
-      disableAutoRefresh: false
+      disableUpDownAutoRefresh: false
     };
   },
   getInitialState () {
