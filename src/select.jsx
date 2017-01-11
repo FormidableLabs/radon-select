@@ -135,7 +135,7 @@ var classBase = React.createClass({
       selectedOptionIndex: selectedOptionIndex,
       selectedOptionVal: this.props.children[selectedOptionIndex].props.value
     }, function () {
-      if (!this.props.disableAutoRefresh) {
+      if (!this.props.disableUpDownAutoRefresh) {
         this.onChange();
       }
 
