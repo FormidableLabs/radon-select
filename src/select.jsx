@@ -382,6 +382,7 @@ var classBase = React.createClass({
         <select
           disabled='true'
           name={this.props.selectName}
+          aria-label={this.props.selectName}
           value={this.state.selectedOptionVal}
           className={this.props.hiddenSelectClassName}
           tabIndex={-1}
