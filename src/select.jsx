@@ -12,6 +12,11 @@ var keyboard = {
   downArrow: 40
 };
 
+// Nessesary as div(role=button) does not report value or aria-valuetext to the screenreader
+var generateAriaLabel = function (label, value) {
+  return `${label} ${value}`;
+};
+
 var doesOptionMatch = function (option, s) {
   s = s.toLowerCase();
 
@@ -346,6 +351,9 @@ var classBase = React.createClass({
     var selectedOptionContent = this.state.selectedOptionIndex !== false &&
       this.props.children[this.state.selectedOptionIndex].props.children;
 
+    var optionLabel = this.props.ariaLabel ? this.props.ariaLabel : this.props.selectName;
+    var ariaLabel = generateAriaLabel(optionLabel, this.state.selectedOptionVal);
+
     if (this.props.optionListStyle) {
       hiddenListStyle = assign({}, this.props.optionListStyle, hiddenListStyle);
     }
@@ -367,6 +375,7 @@ var classBase = React.createClass({
             onBlur={this.onBlur}
             onClick={this.toggleOpen}
             aria-expanded={this.state.open}
+            aria-label={ariaLabel}
             style={this.props.currentOptionStyle}>
             {selectedOptionContent || this.props.placeholderText || this.props.children[0].props.children}
           </div>
@@ -385,7 +394,7 @@ var classBase = React.createClass({
           value={this.state.selectedOptionVal}
           className={this.props.hiddenSelectClassName}
           tabIndex={-1}
-          aria-label={this.props.ariaLabel ? this.props.ariaLabel : this.props.selectName }
+          aria-label={ariaLabel}
           aria-hidden={true} >
             {React.Children.map(this.props.children, function (child, index) {
               return <option key={index} value={child.props.value}>{child.props.value}</option>
@@ -444,11 +453,14 @@ classBase.Option = React.createClass({
     });
   },
   render () {
+    var optionLabel = this.props.ariaLabel ? this.props.ariaLabel : this.props.selectName;
+    var ariaLabel = generateAriaLabel(optionLabel, this.props.value);
     return (
       // Safari ignores tabindex on buttons, and Firefox ignores tabindex on anchors
       // use a <div role="button">.
       <div
         role='button'
+        aria-label={ariaLabel}
         className={this.getClassNames()}
         data-automation-id={this.props.automationId}
         tabIndex={-1}
