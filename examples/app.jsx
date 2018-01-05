@@ -1,8 +1,9 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var RadonSelect = require('../src/select.jsx');
+var createReactClass = require('create-react-class');
 
-var App = React.createClass({
+var App = createReactClass({
   displayName: "App",
   getInitialState() {
     return {

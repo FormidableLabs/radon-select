@@ -7,6 +7,7 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['mocha', 'sinon-chai', 'phantomjs-shim'],
     files: [
+      'node_modules/babel-polyfill/browser.js',
       'test/helpers/**/*.js',
       'test/spec/**/*.js'
     ],

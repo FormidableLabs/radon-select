@@ -4,7 +4,7 @@ describe('Button', function () {
 
   var React = require('react');
   var ReactDOM = require('react-dom');
-  var TestUtils = require('react-addons-test-utils');
+  var TestUtils = require('react-dom/test-utils');
 
   var RadonSelect = require('select.jsx');
   var container, component;

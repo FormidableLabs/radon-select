@@ -2,6 +2,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var assign = require('object-assign');
+var PropTypes = require('prop-types');
+var createReactClass = require('create-react-class');
 
 var keyboard = {
   space: 32,
@@ -23,7 +25,7 @@ var doesOptionMatch = function (option, s) {
   }
 }
 
-var classBase = React.createClass({
+var classBase = createReactClass({
   displayName: 'RadonSelect',
   propTypes: {
     children: function (props, propName) {
@@ -37,26 +39,26 @@ var classBase = React.createClass({
         }
       });
     },
-    selectName: React.PropTypes.string.isRequired,
-    defaultValue: React.PropTypes.string,
-    ariaLabel: React.PropTypes.string,
-    placeholderText: React.PropTypes.string,
-    typeaheadDelay: React.PropTypes.number,
-    showCurrentOptionWhenOpen: React.PropTypes.bool,
-    disabled: React.PropTypes.bool,
-    onChange: React.PropTypes.func,
-    onBlur: React.PropTypes.func,
+    selectName: PropTypes.string.isRequired,
+    defaultValue: PropTypes.string,
+    ariaLabel: PropTypes.string,
+    placeholderText: PropTypes.string,
+    typeaheadDelay: PropTypes.number,
+    showCurrentOptionWhenOpen: PropTypes.bool,
+    disabled: PropTypes.bool,
+    onChange: PropTypes.func,
+    onBlur: PropTypes.func,
     // Should there just be a baseClassName that these are derived from?
-    className: React.PropTypes.string,
-    openClassName: React.PropTypes.string,
-    focusClassName: React.PropTypes.string,
-    listClassName: React.PropTypes.string,
-    disabledClassName: React.PropTypes.string,
-    currentOptionClassName: React.PropTypes.string,
-    hiddenSelectClassName: React.PropTypes.string,
-    currentOptionStyle: React.PropTypes.object,
-    optionListStyle: React.PropTypes.object,
-    disableUpDownAutoRefresh: React.PropTypes.bool
+    className: PropTypes.string,
+    openClassName: PropTypes.string,
+    focusClassName: PropTypes.string,
+    listClassName: PropTypes.string,
+    disabledClassName: PropTypes.string,
+    currentOptionClassName: PropTypes.string,
+    hiddenSelectClassName: PropTypes.string,
+    currentOptionStyle: PropTypes.object,
+    optionListStyle: PropTypes.object,
+    disableUpDownAutoRefresh: PropTypes.bool
   },
   getDefaultProps () {
     return {
@@ -401,14 +403,14 @@ var classBase = React.createClass({
   }
 });
 
-classBase.Option = React.createClass({
+classBase.Option = createReactClass({
   displayName: 'RadonSelectOption',
   propTypes: {
     // TODO: Disabled
-    value: React.PropTypes.string.isRequired,
-    children: React.PropTypes.oneOfType([React.PropTypes.node, React.PropTypes.string]).isRequired,
-    onClick: React.PropTypes.func,
-    automationId: React.PropTypes.string
+    value: PropTypes.string.isRequired,
+    children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
+    onClick: PropTypes.func,
+    automationId: PropTypes.string
   },
   getDefaultProps () {
     return {
