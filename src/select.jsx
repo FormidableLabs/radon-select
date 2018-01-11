@@ -267,7 +267,7 @@ var classBase = createReactClass({
     var child = this.refs['option' + index];
 
     // Null safety here prevents an iOS-specific bug preventing selection of options
-    ev ? ev.preventDefault() : null;
+    ev ? ev.preventDefault() : null; // eslint-disable-line no-unused-expressions
 
     this.setState({
       selectedOptionIndex: index,
@@ -319,7 +319,7 @@ var classBase = createReactClass({
 
     return wrapperClassNames.join(' ');
   },
-  focus(ref) {
+  focus (ref) {
     ReactDOM.findDOMNode(ref).focus();
   },
   renderChild (child, index) {

@@ -48,6 +48,7 @@
     "babel-core": "^6.7.4",
     "create-react-class": "^15.6.2",
     "object-assign": "^4.0.0",
+    "prop-types": "^15.6.0",
     "rimraf": "^2.4.1"
   }
 }
