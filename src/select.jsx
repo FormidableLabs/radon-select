@@ -370,7 +370,7 @@ var classBase = createReactClass({
             onClick={this.toggleOpen}
             aria-expanded={this.state.open}
             style={this.props.currentOptionStyle}>
-            {selectedOptionContent || this.props.placeholderText || this.props.children[0].props.children}
+            {this.props.placeholderText || selectedOptionContent || this.props.children[0].props.children}
           </div>
           :
           ''
